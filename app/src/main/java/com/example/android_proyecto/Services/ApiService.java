@@ -1,5 +1,6 @@
 package com.example.android_proyecto.Services;
 
+import com.example.android_proyecto.Models.EventUser;
 import com.example.android_proyecto.Models.Faq;
 import com.example.android_proyecto.Models.FishingRod;
 import com.example.android_proyecto.Models.QuestionRequest;
@@ -47,7 +48,6 @@ public interface ApiService {
     @DELETE("me")
     Call<ResponseBody> deleteMe(@Header("Authorization") String token);
 
-
     // --- CATALOG ---
 
     @GET("catalog/fishing_rods")
@@ -85,4 +85,8 @@ public interface ApiService {
 
     @GET("info/videos")
     Call<List<Video>> getVideos();
+
+    // --- EVENTS ---
+    @GET("events/{eventId}/users")
+    Call<List<EventUser>> getEventUsers(@Path("eventId") String eventId);
 }

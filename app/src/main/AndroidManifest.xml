@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Permiso de red -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,8 +25,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
 
         <activity android:name=".Activities.ShopActivity" />
         <activity android:name=".Activities.LogInActivity" android:exported="false" />
@@ -36,10 +33,14 @@
         <activity android:name=".Activities.MenuActivity" />
         <activity android:name=".Activities.FaqActivity" android:exported="false" />
         <activity android:name=".Activities.AskQuestionActivity" />
-        <activity android:name=".Activities.VideoActivity" android:exported="false"
-            android:hardwareAccelerated="true"
-            />
+        <activity
+            android:name=".Activities.VideoActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true" />
 
+        <activity android:name=".Activities.EventUsersActivity" />
+
+        <activity android:name=".Activities.ChooseEventSplitActivity" />
 
     </application>
 </manifest>

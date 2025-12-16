@@ -35,6 +35,8 @@ public class MenuActivity extends AppCompatActivity {
 
     private ApiService api;
 
+    private Button btnEventUsers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +55,11 @@ public class MenuActivity extends AppCompatActivity {
         btnBackFromSettings = findViewById(R.id.btnBackFromSettings);
         tvWelcomeUser = findViewById(R.id.tvWelcomeUser);
 
-        String username = session.getUsername();
-        tvWelcomeUser.setText("Welcome, " + username + "!");
+        btnEventUsers = findViewById(R.id.btnEventUsers);
 
-        String token = session.getToken();
-        //Toast.makeText(this, "Token: " + token, Toast.LENGTH_LONG).show();
+        String username = session.getUsername();
+        if (username == null) username = "Player";
+        tvWelcomeUser.setText("Welcome, " + username + "!");
 
         btnGoGame.setOnClickListener(v ->
                 Toast.makeText(MenuActivity.this, "Feature in production", Toast.LENGTH_SHORT).show()
@@ -72,6 +74,11 @@ public class MenuActivity extends AppCompatActivity {
 
         btnSettings.setOnClickListener(v -> openSettings());
         btnBackFromSettings.setOnClickListener(v -> closeSettings());
+
+        btnEventUsers.setOnClickListener(v -> {
+            Intent i = new Intent(MenuActivity.this, ChooseEventSplitActivity.class);
+            startActivity(i);
+        });
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
@@ -91,6 +98,7 @@ public class MenuActivity extends AppCompatActivity {
         settingsPanel.setVisibility(View.VISIBLE);
         btnBackFromSettings.setVisibility(View.VISIBLE);
         btnSettings.setVisibility(View.GONE);
+        if (btnEventUsers != null) btnEventUsers.setVisibility(View.GONE);
     }
 
     private void closeSettings() {
@@ -98,6 +106,7 @@ public class MenuActivity extends AppCompatActivity {
         settingsPanel.setVisibility(View.GONE);
         btnBackFromSettings.setVisibility(View.GONE);
         btnSettings.setVisibility(View.VISIBLE);
+        if (btnEventUsers != null) btnEventUsers.setVisibility(View.VISIBLE);
     }
 
     private void doLogout() {
@@ -121,7 +130,9 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 session.clear();
-                Toast.makeText(MenuActivity.this, "Logged out (connection error: " + t.getMessage() + ")", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuActivity.this,
+                        "Logged out (connection error: " + t.getMessage() + ")",
+                        Toast.LENGTH_SHORT).show();
                 goToMain();
             }
         });
